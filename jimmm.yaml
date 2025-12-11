@@ -1,8 +1,21 @@
 mixed-port: 7890
 allow-lan: true
+bind-address: '0.0.0.0'
 mode: rule
 log-level: info
-external-controller: 127.0.0.1:9090
+external-controller: '127.0.0.1:9090'
+
+dns:
+  enable: true
+  ipv6: false
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
 
 proxies:
   - name: "官网:https://jimmm.pro"
@@ -13,20 +26,15 @@ proxies:
     password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1
     udp: true
 
-  # 新加坡
   - {name: 新加坡01, type: ss, server: 36.139.109.15, port: 10622, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
   - {name: 新加坡02, type: ss, server: 36.139.0.93, port: 14109, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
 
-  # 日本
   - {name: 日本01, type: ss, server: 36.139.107.220, port: 29575, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
 
-  # 美国
   - {name: 美国01, type: ss, server: 36.139.0.93, port: 56725, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
 
-  # 韩国
   - {name: 韩国01, type: ss, server: 36.139.6.11, port: 54855, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
 
-  # 德国
   - {name: 德国01, type: ss, server: 116.181.11.41, port: 64886, cipher: aes-128-gcm, password: 742b1da9-66cf-44eb-8715-0d0cb26d76b1}
 
 proxy-groups:
@@ -34,7 +42,7 @@ proxy-groups:
     type: select
     proxies:
       - 自动选择
-      - 官网:https://jimmm.pro
+      - "官网:https://jimmm.pro"
       - 新加坡01
       - 新加坡02
       - 日本01
@@ -45,7 +53,7 @@ proxy-groups:
   - name: 自动选择
     type: url-test
     proxies:
-      - 官网:https://jimmm.pro
+      - "官网:https://jimmm.pro"
       - 新加坡01
       - 新加坡02
       - 日本01
